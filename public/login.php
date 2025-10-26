@@ -9,8 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM users WHERE email='$email'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $user = $result->fetch_assoc();
+        //verification
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
@@ -18,15 +19,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user['role'] == 'admin') {
                 header("Location: ../admin/dashboard.php");
             } else {
-                header("Location: index.php");
+                header("Location: home.php");
             }
-            exit;
+
+
+
         } else {
             echo "<p>Invalid password.</p>";
         }
     } else {
         echo "<p> No user found with that email.</p>";
     }
+
+
+
 }
 ?>
 
