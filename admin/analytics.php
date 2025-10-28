@@ -134,7 +134,6 @@ canvas {
 <div class="container">
   <h2>📈 Summary Overview</h2>
   <ul class="stats">
-    <li><strong>Total Customers:</strong> <?= $total_users ?></li>
     <li><strong>Total Appointments:</strong> <?= $total_appointments ?></li>
     <li><strong>Completed:</strong> <?= $completed_appointments ?></li>
     <li><strong>Pending:</strong> <?= $pending_appointments ?></li>
