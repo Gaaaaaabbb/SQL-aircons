@@ -31,9 +31,7 @@ $result = $conn->query($sql);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin | Manage Appointments</title>
 <style>
-/* ===========================
-   Admin Dashboard – SQL Aircons Layout
-   =========================== */
+
 
 * {
   margin: 0;
@@ -48,7 +46,7 @@ body {
   line-height: 1.6;
 }
 
-/* ---------- Header ---------- */
+/*  Header */
 header {
   background: #ffffff;
   display: flex;
@@ -69,7 +67,7 @@ header h1::before {
   color: #3b82f6;
 }
 
-/* ---------- Logout Button ---------- */
+/*  Logout Button  */
 .logout-btn {
   background: #ef4444;
   color: #fff;
@@ -164,7 +162,7 @@ tr:nth-child(even) { background: #f9f9f9; }
 <body>
 <header>
   <h1>Aircons</h1>
-  <a href="../public/logout.php" class="logout-btn">Logout</a>
+  <a href="../public/index.php" class="logout-btn">Logout</a>
   
 </header>
 <h1 class="mng-appt"> Manage Appointments </h1>

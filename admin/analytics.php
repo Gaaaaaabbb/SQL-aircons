@@ -58,9 +58,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'pdf') {
 <title>Admin | Analytics Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-/* ===========================
-   Admin Dashboard – SQL Aircons Unified Style
-   =========================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -74,7 +72,7 @@ body {
   line-height: 1.6;
 }
 
-/* ---------- Header ---------- */
+/*  Header */
 header {
   background: #ffffff;
   display: flex;
@@ -95,7 +93,7 @@ header h1::before {
   color: #3b82f6;
 }
 
-/* ---------- Logout Button ---------- */
+/*  Logout Button  */
 .logout-btn {
   background: #ef4444;
   color: #fff;
@@ -112,7 +110,7 @@ header h1::before {
   transform: scale(1.05);
 }
 
-/* ---------- Page Title ---------- */
+/* Page Title  */
 .page-title {
   text-align: center;
   margin-top: 40px;
@@ -121,7 +119,7 @@ header h1::before {
   color: #1f2937;
 }
 
-/* ---------- Action Bar ---------- */
+/*  Action Bar */
 .action-bar {
   display: flex;
   justify-content: flex-start;
@@ -144,7 +142,7 @@ header h1::before {
   background: #2563eb;
 }
 
-/* ---------- Container ---------- */
+/* Container  */
 .container {
   width: 90%;
   max-width: 1000px;
@@ -155,7 +153,7 @@ header h1::before {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* ---------- Stats List ---------- */
+/*  Stats List */
 .stats {
   list-style: none;
   padding: 0;
@@ -169,7 +167,7 @@ header h1::before {
   font-size: 16px;
 }
 
-/* ---------- Chart Section ---------- */
+/* Chart Section  */
 .chart-container {
   display: flex;
   flex-wrap: wrap;
@@ -187,7 +185,7 @@ canvas {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* ---------- Buttons ---------- */
+/*Buttons */
 button {
   background: #3b82f6;
   color: white;
@@ -209,7 +207,7 @@ button:hover {
 
 <header>
   <h1>Aircons</h1>
-  <a href="../public/logout.php" class="logout-btn">Logout</a>
+  <a href="../public/index.php" class="logout-btn">Logout</a>
 </header>
 
 <h1 class="page-title">Admin Analytics Dashboard</h1>

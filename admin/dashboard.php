@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit();
 }
 
-include '../config/db.php'; // adjust path if needed
+include '../config/db.php'; 
 ?>
 
 
@@ -27,9 +27,7 @@ include '../config/db.php'; // adjust path if needed
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard | SQL Aircons</title>
 <style>
-/* ===========================
-   Admin Dashboard – SQL Aircons Layout
-   =========================== */
+
 
 * {
   margin: 0;
@@ -44,7 +42,7 @@ body {
   line-height: 1.6;
 }
 
-/* ---------- Header ---------- */
+/*  Header */
 header {
   background: #ffffff;
   display: flex;
@@ -65,7 +63,7 @@ header h1::before {
   color: #3b82f6;
 }
 
-/* ---------- Logout Button ---------- */
+/* Logout Button  */
 .logout-btn {
   background: #ef4444;
   color: #fff;
@@ -82,14 +80,14 @@ header h1::before {
   transform: scale(1.05);
 }
 
-/* ---------- Container ---------- */
+/*  Container*/
 .container {
   max-width: 1000px;
   margin: 60px auto 40px;
   padding: 0 20px;
 }
 
-/* ---------- Welcome Card ---------- */
+/*  Welcome Card  */
 .card {
   background: #ffffff;
   padding: 40px;
@@ -111,7 +109,7 @@ header h1::before {
   color: #4b5563;
 }
 
-/* ---------- Navigation Section ---------- */
+/* Navigation Section */
 .nav-card {
   background: #ffffff;
   padding: 40px 50px;
@@ -139,7 +137,7 @@ header h1::before {
   transform: scale(1.05);
 }
 
-/* ---------- Responsive ---------- */
+/*  Responsive  */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -168,7 +166,7 @@ header h1::before {
 <body>
 <header>
   <h1>Aircons</h1>
-  <a href="../public/logout.php" class="logout-btn">Logout</a>
+  <a href="../public/index.php" class="logout-btn">Logout</a>
 </header>
 
 <div class="container">

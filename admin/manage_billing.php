@@ -41,9 +41,7 @@ $result = $conn->query($sql);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin | Manage Billing</title>
 <style>
-/* ===========================
-   Admin Dashboard – SQL Aircons Unified Style
-   =========================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -57,7 +55,7 @@ body {
   line-height: 1.6;
 }
 
-/* ---------- Header ---------- */
+/*  Header */
 header {
   background: #ffffff;
   display: flex;
@@ -78,7 +76,7 @@ header h1::before {
   color: #3b82f6;
 }
 
-/* ---------- Logout Button ---------- */
+/* Logout Button*/
 .logout-btn {
   background: #ef4444;
   color: #fff;
@@ -95,7 +93,7 @@ header h1::before {
   transform: scale(1.05);
 }
 
-/* ---------- Page Title ---------- */
+/*  Page Title*/
 .page-title {
   text-align: center;
   margin-top: 40px;
@@ -104,7 +102,7 @@ header h1::before {
   color: #1f2937;
 }
 
-/* ---------- Action Bar ---------- */
+/* Action Bar */
 .action-bar {
   display: flex;
   justify-content: flex-start;
@@ -127,7 +125,7 @@ header h1::before {
   background: #2563eb;
 }
 
-/* ---------- Container & Table ---------- */
+/*  Container & Table  */
 .container {
   padding: 30px;
 }
@@ -154,7 +152,7 @@ th {
 
 tr:nth-child(even) { background: #f9f9f9; }
 
-/* ---------- Status Colors ---------- */
+/*  Status Colors  */
 .status-paid {
   color: #16a34a;
   font-weight: 600;
@@ -165,7 +163,7 @@ tr:nth-child(even) { background: #f9f9f9; }
   font-weight: 600;
 }
 
-/* ---------- Action Links ---------- */
+/*  Action Links  */
 .action-buttons a {
   text-decoration: none;
   background: #e3ebf7;
@@ -185,7 +183,7 @@ tr:nth-child(even) { background: #f9f9f9; }
 <body>
 <header>
   <h1>Aircons</h1>
-  <a href="../public/logout.php" class="logout-btn">Logout</a>
+  <a href="../public/index.php" class="logout-btn">Logout</a>
 </header>
 
 <h1 class="page-title">Manage Billing</h1>

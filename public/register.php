@@ -40,6 +40,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  overflow: hidden;
 }
 
 /* Container */
@@ -48,6 +49,9 @@ body {
   padding: 60px 80px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
 /* Logo and Header */
@@ -56,10 +60,14 @@ body {
   font-weight: 600;
   margin-bottom: 20px;
   color: #1f2937;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.2s;
 }
 
 .login-box .brand {
-  color: #3b82f6; /* Blue tone for SQL */
+  color: #3b82f6; /* SQL blue to*/
 }
 
 /* Sub-header */
@@ -68,6 +76,10 @@ body {
   font-weight: 700;
   margin-bottom: 30px;
   color: #111827;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.3s;
 }
 
 /* Form */
@@ -86,13 +98,29 @@ input {
   font-size: 16px;
   color: #111827;
   background-color: #f9fafb;
-  transition: border 0.2s;
+  transition: all 0.2s;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInFromLeft 0.6s ease forwards;
+}
+
+input:nth-of-type(1) {
+  animation-delay: 0.4s;
+}
+
+input:nth-of-type(2) {
+  animation-delay: 0.5s;
+}
+
+input:nth-of-type(3) {
+  animation-delay: 0.6s;
 }
 
 input:focus {
   outline: none;
   border-color: #3b82f6;
   background-color: #fff;
+  transform: translateX(0) scale(1.02);
 }
 
 /* Button */
@@ -105,26 +133,91 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.7s;
 }
 
 button:hover {
   background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
-/* Forgot Password */
-.forgot-password {
-  display: block;
-  margin-top: 10px;
-  font-size: 14px;
-  color: #374151;
+button:active {
+  transform: translateY(0);
+}
+
+/* Already have account link */
+form + p {
+  margin-top: 20px;
   text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+  animation-delay: 0.8s;
+}
+
+form + p a {
+  color: #3b82f6;
   text-decoration: none;
+  font-weight: 500;
   transition: color 0.2s;
 }
 
-.forgot-password:hover {
-  color: #1d4ed8;
+form + p a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 40px 30px;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .login-box h2 {
+    font-size: 32px;
+  }
 }
 
   </style>
@@ -140,6 +233,7 @@ button:hover {
         <input type="password" name="password" placeholder="Password" required />
         <button type="submit">Register</button>
       </form>
+      <p>Already have an account? <a href="login.php">Log in</a></p>
     </div>
   </div>
 </body>
