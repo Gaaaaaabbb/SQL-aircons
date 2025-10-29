@@ -1,8 +1,7 @@
 <?php
-include('../includes/auth.php'); // protect the page
+include('../includes/auth.php');
 include('../config/db.php');
 
-// Get user info (optional)
 $user_id = $_SESSION['user_id'];
 $query = mysqli_query($conn, "SELECT name FROM users WHERE id = '$user_id'");
 $user = mysqli_fetch_assoc($query);
@@ -21,19 +20,20 @@ $username = $user['name'] ?? 'User';
       color: #111827;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     header {
       background: white;
-      padding: 20px 50px;
+      padding: 25px 50px;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      text-align: center;
+      animation: fadeDown 0.8s ease forwards;
     }
 
     h1 {
       margin: 0;
+      font-size: 36px;
     }
 
     .first-word-title {
@@ -44,27 +44,25 @@ $username = $user['name'] ?? 'User';
       color: #111827;
     }
 
-    .slogan {
-      font-size: 18px;
-      color: #6b7280;
-      margin: 0;
-    }
-
     nav {
       display: flex;
       justify-content: center;
       background: white;
       padding: 15px 0;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-      gap: 30px;
+      gap: 25px;
+      opacity: 0;
+      transform: translateY(-10px);
+      animation: fadeUp 0.9s ease forwards;
+      animation-delay: 0.3s;
     }
 
     nav a {
       color: #111827;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 500;
-      padding: 10px 20px;
+      padding: 10px 25px;
       border-radius: 10px;
       transition: 0.3s ease;
     }
@@ -72,26 +70,76 @@ $username = $user['name'] ?? 'User';
     nav a:hover {
       background: #2563eb;
       color: white;
+      transform: scale(1.05);
     }
 
     main {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 60px;
+      justify-content: center;
+      height: 70vh;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .welcome-text {
+      font-size: 26px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .slogan {
+      font-size: 18px;
+      color: #6b7280;
     }
 
     footer {
       text-align: center;
       font-size: 0.9em;
       color: #6b7280;
-      margin-top: 80px;
+      margin-top: 40px;
       padding-bottom: 30px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 1s;
+    }
+
+    /* ✨ Animations */
+    @keyframes fadeDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @media (max-width: 768px) {
       header, nav, main {
         padding: 20px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .welcome-text {
+        font-size: 22px;
+      }
+
+      .slogan {
+        font-size: 16px;
       }
     }
   </style>
@@ -100,8 +148,6 @@ $username = $user['name'] ?? 'User';
 
   <header>
     <h1><span class="first-word-title">SQL </span><span class="second-word-title">Aircons</span></h1>
-    <h2>Welcome back, <?php echo htmlspecialchars($username); ?> 👋</h2>
-    <p class="slogan">Manage your air conditioning services with ease.</p>
   </header>
 
   <nav>
@@ -112,7 +158,10 @@ $username = $user['name'] ?? 'User';
   </nav>
 
   <main>
-    <!-- Removed dashboard card -->
+    <div class="welcome-section">
+      <p class="welcome-text">Welcome back, <?php echo htmlspecialchars($username); ?></p>
+      <p class="slogan">Manage your air conditioning services with ease.</p>
+    </div>
   </main>
 
   <footer>

@@ -9,7 +9,16 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Always show all bills by this user
+// Fetch username
+$user_query = $conn->prepare("SELECT name FROM users WHERE id = ?");
+$user_query->bind_param("i", $user_id);
+$user_query->execute();
+$user_result = $user_query->get_result();
+$user = $user_result->fetch_assoc();
+$username = $user['name'] ?? 'User';
+$user_query->close();
+
+// Fetch billing records
 $sql = "
     SELECT b.*, s.name AS service_name
     FROM billing b
@@ -37,15 +46,15 @@ $stmt->close();
       color: #111827;
       margin: 0;
       padding: 0;
+      animation: fadeIn 0.7s ease;
     }
 
     header {
       background: white;
-      padding: 20px 50px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      padding: 25px 50px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: slideDown 0.8s ease;
     }
 
     .first-word-title {
@@ -58,90 +67,121 @@ $stmt->close();
 
     h1 {
       margin: 0;
+      font-size: 32px;
+    }
+
+    .welcome-text {
+      font-size: 18px;
+      color: #6b7280;
+      margin-top: 8px;
     }
 
     .nav-links {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 30px;
+      gap: 25px;
       background: white;
       padding: 15px 0;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      animation: fadeInUp 1s ease;
     }
 
     .nav-links a {
       color: #111827;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 500;
-      padding: 10px 20px;
+      padding: 10px 25px;
       border-radius: 10px;
-      transition: 0.3s ease;
+      transition: 0.3s;
     }
 
-    .nav-links a:hover {
-      background: #2563eb;
-      color: white;
-    }
-
+    .nav-links a:hover,
     .nav-links a.active {
       background: #2563eb;
       color: white;
+      transform: translateY(-3px);
+    }
+
+    main {
+      width: 90%;
+      margin: 50px auto;
+      text-align: center;
+      animation: fadeInUp 0.9s ease;
     }
 
     h2 {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 28px;
+      font-size: 26px;
       color: #1f2937;
+      margin-bottom: 25px;
     }
 
     table {
-      width: 80%;
-      margin: 40px auto;
+      width: 100%;
       border-collapse: collapse;
       background: white;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      animation: fadeInUp 1.1s ease;
     }
 
     th, td {
-      padding: 15px;
-      text-align: left;
+      padding: 15px 18px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: center;
+      font-size: 15px;
     }
 
     th {
-      background-color: #2563eb;
+      background: #2563eb;
       color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    tr:nth-child(even) {
-      background: #f9fafb;
+    tr:hover {
+      background-color: #f3f4f6;
+      transition: 0.2s;
     }
 
-    .pending {
-      color: #f59e0b;
-      font-weight: bold;
-    }
-
-    .paid {
-      color: #10b981;
-      font-weight: bold;
-    }
+    .pending { color: #d97706; font-weight: 600; }
+    .paid { color: #059669; font-weight: 600; }
 
     footer {
       text-align: center;
       font-size: 0.9em;
       color: #6b7280;
-      margin-top: 80px;
+      margin-top: 60px;
       padding-bottom: 30px;
     }
 
-    @media (max-width: 600px) {
-      header {
-        padding: 20px;
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
       }
     }
   </style>
@@ -150,7 +190,6 @@ $stmt->close();
 <body>
   <header>
     <h1><span class="first-word-title">SQL</span> <span class="second-word-title">Aircons</span></h1>
-    <h2>Billing</h2>
   </header>
 
   <div class="nav-links">
@@ -160,42 +199,42 @@ $stmt->close();
     <a href="billing.php" class="active">Billing</a>
   </div>
 
-  <h2>Your Billing Summary</h2>
+  <main>
+    <h2>Your Billing Summary</h2>
 
-  <table>
-    <tr>
-      <th>Service</th>
-      <th>Amount</th>
-      <th>Status</th>
-      <th>Payment Method</th>
-      <th>Date</th>
-    </tr>
-
-    <?php if (empty($billings)): ?>
+    <table>
       <tr>
-        <td colspan="5" style="text-align:center;">No billing records found.</td>
+        <th>Service</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Payment Method</th>
+        <th>Date</th>
       </tr>
-    <?php else: ?>
-      <?php foreach ($billings as $bill): ?>
-        <tr>
-          <td><?= htmlspecialchars($bill['service_name']) ?></td>
-          <td>₱<?= number_format($bill['total_amount'], 2) ?></td>
-          <td>
-            <?php if (isset($bill['status']) && strtolower($bill['status']) === 'paid'): ?>
-              <span class="paid">Paid</span>
-            <?php else: ?>
-              <span class="pending">Pending</span>
-            <?php endif; ?>
-          </td>
-          <td><?= htmlspecialchars($bill['payment_method'] ?? 'Cash') ?></td>
-          <td><?= htmlspecialchars($bill['created_at']) ?></td>
-        </tr>
-      <?php endforeach; ?>
-    <?php endif; ?>
-  </table>
+
+      <?php if (empty($billings)): ?>
+        <tr><td colspan="5" style="padding: 25px;">No billing records found.</td></tr>
+      <?php else: ?>
+        <?php foreach ($billings as $bill): ?>
+          <tr>
+            <td><?= htmlspecialchars($bill['service_name']) ?></td>
+            <td>₱<?= number_format($bill['total_amount'], 2) ?></td>
+            <td>
+              <?php if (isset($bill['status']) && strtolower($bill['status']) === 'paid'): ?>
+                <span class="paid">Paid</span>
+              <?php else: ?>
+                <span class="pending">Pending</span>
+              <?php endif; ?>
+            </td>
+            <td><?= htmlspecialchars($bill['payment_method'] ?? 'Cash') ?></td>
+            <td><?= htmlspecialchars($bill['created_at']) ?></td>
+          </tr>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </table>
+  </main>
 
   <footer>
-    <p>© 2025 SQL Aircons. All Rights Reserved.</p>
+    <p>© <?= date('Y') ?> SQL Aircons. All Rights Reserved.</p>
   </footer>
 </body>
 </html>
