@@ -20,16 +20,67 @@ $result = $conn->query($sql);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manage Users | Admin</title>
 <style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f5f6fa;
+/* ===========================
+   Admin Dashboard – SQL Aircons Layout
+   =========================== */
+
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+  line-height: 1.6;
+}
+
+/* ---------- Header ---------- */
 header {
-  background: #007bff;
-  color: white;
-  padding: 20px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+header h1::before {
+  content: "SQL ";
+  color: #3b82f6;
+}
+
+/* ---------- Logout Button ---------- */
+.logout-btn {
+  background: #ef4444;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+.mng-usr {
   text-align: center;
+  margin-top: 40px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2937;
 }
 .container {
   width: 90%;
@@ -49,7 +100,7 @@ th, td {
   text-align: left;
 }
 th {
-  background: #007bff;
+  background: #3b82f6;
   color: white;
 }
 tr:nth-child(even) {
@@ -71,25 +122,32 @@ tr:nth-child(even) {
   background: #cddaf3;
   transform: scale(1.05);
 }
-.add-btn {
+.back-btn {
   display: inline-block;
-  background: #007bff;
+  background: #3b82f6;
   color: white;
   padding: 10px 15px;
   border-radius: 6px;
   text-decoration: none;
   margin-bottom: 15px;
 }
+
+.back-btn:hover {
+  background: #2563eb;
+}
 </style>
 </head>
 
 <body>
 <header>
-  <h1>Manage Users</h1>
+  <h1>Aircons</h1>
+  <a href="../public/logout.php" class="logout-btn">Logout</a>
 </header>
 
+<h1 class="mng-usr"> Manage Users </h1>
+
 <div class="container">
-  <a href="dashboard.php" class="add-btn">⬅ Back to Dashboard</a>
+  <a href="dashboard.php" class="back-btn"> Back to Dashboard</a>
 
   <table>
     <tr>
