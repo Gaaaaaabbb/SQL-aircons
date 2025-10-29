@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = 'customer'; // default role
 
-    $sql = "INSERT INTO users (name, email, password, role)
-            VALUES ('$name', '$email', '$password', '$role')";
+    $sql = "INSERT INTO users (name, email, password, role, created_at)
+            VALUES ('$name', '$email', '$password', '$role', NOW())";
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('Registration successful! You can now log in.'); window.location='login.php';</script>";
@@ -136,8 +136,8 @@ button:hover {
       <h2>Register</h2>
       <form method="POST" action="">
         <input type="text" name="name" placeholder="Full Name" required>       
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Password" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
         <button type="submit">Register</button>
       </form>
     </div>
