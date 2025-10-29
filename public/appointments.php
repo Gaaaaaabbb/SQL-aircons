@@ -33,7 +33,6 @@ $sql = "
 
 $stmt = $conn->prepare($sql);
 
-// Debug check
 if (!$stmt) {
     die("SQL Prepare failed: " . $conn->error . "<br><br>Query: " . $sql);
 }
@@ -54,102 +53,137 @@ $stmt->close();
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f1f2f3ff;
-      color: black;
+      background: #f8fafc;
+      color: #111827;
       margin: 0;
       padding: 0;
     }
+
     header {
-      padding: 40px 20px;
-      background: #f1f2f3ff;
+      background: white;
+      padding: 20px 50px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
+
     .first-word-title {
-      text-align: left;
-      color: #5ba1e6ff;
+      color: #2563eb;
     }
+
     .second-word-title {
-      text-align: left;
-      color: black;
+      color: #111827;
     }
+
+    h1 {
+      margin: 0;
+    }
+
     .nav-links {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 50px;
+      gap: 30px;
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
-    a {
-      color: black;
-      background: hsla(214, 93%, 47%, 0.20);
-      padding: 19px 30px;
-      border-radius: 12px;
+
+    .nav-links a {
+      color: #111827;
       text-decoration: none;
-      transition: 0.3s;
-      font-size: 1.1em;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: 0.3s ease;
     }
-    a:hover {
-      background: rgba(44, 129, 239, 0.4);
+
+    .nav-links a:hover {
+      background: #2563eb;
+      color: white;
     }
+
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 28px;
+      color: #1f2937;
+    }
+
     table {
       width: 90%;
       margin: 40px auto;
       border-collapse: collapse;
-      background: #fff;
-      border-radius: 10px;
+      background: white;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
+
     th, td {
-      padding: 12px 15px;
-      border: 1px solid #ddd;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5e7eb;
       text-align: left;
+      font-size: 15px;
     }
+
     th {
-      background: #007bff;
+      background: #2563eb;
       color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 14px;
     }
-    tr:nth-child(even) {
-      background: #f9f9f9;
+
+    tr:hover {
+      background-color: #f9fafb;
     }
-    .pending { color: orange; font-weight: bold; }
-    .completed { color: green; font-weight: bold; }
-    .cancelled { color: red; font-weight: bold; }
+
+    .pending { color: #d97706; font-weight: bold; }
+    .completed { color: #059669; font-weight: bold; }
+    .cancelled { color: #dc2626; font-weight: bold; }
 
     .action-buttons {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-    align-items: center;
-}
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      align-items: center;
+    }
 
-.action-buttons a {
-    text-decoration: none;
-    background-color: #e3ebf7;
-    color: #333;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: 0.2s;
-}
+    .action-buttons a {
+      text-decoration: none;
+      background-color: #e3ebf7;
+      color: #333;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.2s;
+    }
 
-.action-buttons a:hover {
-    background-color: #cddaf3;
-    transform: scale(1.05);
-}
+    .action-buttons a:hover {
+      background-color: #cddaf3;
+      transform: scale(1.05);
+    }
 
-.action-buttons a i {
-    font-size: 14px;
-}
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #6b7280;
+      margin-top: 80px;
+      padding-bottom: 30px;
+    }
   </style>
 </head>
 
 <body>
   <header>
     <h1><span class="first-word-title">SQL</span> <span class="second-word-title">Aircons</span></h1>
-    <h1>Appointments</h1>
+    <h2>Appointments</h2>
   </header>
 
   <div class="nav-links">
@@ -158,18 +192,21 @@ $stmt->close();
     <a href="billing.php">Billing</a>
   </div>
 
+  <h2>Your Appointments</h2>
+
   <table>
     <tr>
       <th>Service</th>
       <th>Date</th>
-      <th>Appointment Status</th>
+      <th>Status</th>
       <th>Billing Amount</th>
       <th>Billing Status</th>
-      <th>Payment Method</th>
+      <th>Payment</th>
+      <th>Action</th>
     </tr>
 
     <?php if (empty($appointments)): ?>
-      <tr><td colspan="6" style="text-align:center;">No appointments yet.</td></tr>
+      <tr><td colspan="7" style="text-align:center; padding: 20px;">No appointments yet.</td></tr>
     <?php else: ?>
       <?php foreach ($appointments as $a): ?>
         <tr>
@@ -184,18 +221,18 @@ $stmt->close();
           </td>
           <td>Cash Only</td>
           <td>
-
-          <div class="action-buttons">
-            <a href="edit_appointment.php?id=<?= $a['appointment_id'] ?>" title="Edit">✏️</a>
-            <a href="delete_appointment.php?id=<?= $a['appointment_id'] ?>" onclick="return confirm('Are you sure?');" title="Delete">🗑️</a>
-          </div>
-
-
+            <div class="action-buttons">
+              <a href="edit_appointment.php?id=<?= $a['appointment_id'] ?>" title="Edit">✏️</a>
+              <a href="delete_appointment.php?id=<?= $a['appointment_id'] ?>" onclick="return confirm('Are you sure?');" title="Delete">🗑️</a>
+            </div>
           </td>
         </tr>
       <?php endforeach; ?>
     <?php endif; ?>
   </table>
 
+  <footer>
+    <p>© 2025 SQL Aircons. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>

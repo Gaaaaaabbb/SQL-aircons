@@ -17,73 +17,103 @@ $username = $user['name'] ?? 'User';
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f1f2f3ff;
-      color: black;
+      background: #f8fafc;
+      color: #111827;
       margin: 0;
       padding: 0;
     }
 
     header {
-      padding: 40px 20px;
-      background: #f1f2f3ff;
+      background: white;
+      padding: 20px 50px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    
+
+    h1 {
+      margin: 0;
+    }
+
     .first-word-title {
-      text-align: left;
-      color: #5ba1e6ff;
+      color: #2563eb;
     }
 
-    .second-word-title{
-      text-align: left;
-      color: black;
+    .second-word-title {
+      color: #111827;
     }
 
-    .slogan{
-      text-align: left;
-      font-size: 20px;
+    .slogan {
+      font-size: 18px;
+      color: #6b7280;
+      margin: 0;
     }
-    .nav-links {
+
+    nav {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 50px;
-    }
-    a {
-      color: white;
-      background: hsla(214, 93%, 47%, 0.20);
-      padding: 19px 30px;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: 0.3s;
-      font-size: 1.1em;
-      color: black;
-    }
-    a:hover {
-      background: rgba(44, 129, 239, 0.4);
-    }
-    footer {
-      margin-top: 80px;
-      font-size: 0.9em;
-      opacity: 0.8;
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      gap: 30px;
     }
 
+    nav a {
+      color: #111827;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 60px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #6b7280;
+      margin-top: 80px;
+      padding-bottom: 30px;
+    }
+
+    @media (max-width: 768px) {
+      header, nav, main {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1> <span class="first-word-title" >SQL </span> <span class="second-word-title">Aircons </span> </h1>
-    <h1>Welcome back, <?php echo htmlspecialchars($username); ?> 👋</h1>
+    <h1><span class="first-word-title">SQL </span><span class="second-word-title">Aircons</span></h1>
+    <h2>Welcome back, <?php echo htmlspecialchars($username); ?> 👋</h2>
     <p class="slogan">Manage your air conditioning services with ease.</p>
   </header>
 
-  <div class="nav-links">
+  <nav>
     <a href="services.php">Services</a>
-    <a href="appointments.php"> My Appointments</a>
-    <a href="billing.php"> Billing</a>
-    <a href="logout.php"> Logout</a>
-  </div>
+    <a href="appointments.php">My Appointments</a>
+    <a href="billing.php">Billing</a>
+    <a href="logout.php">Logout</a>
+  </nav>
+
+  <main>
+    <!-- Removed dashboard card -->
+  </main>
 
   <footer>
     <p>© <?php echo date("Y"); ?> SQL Aircons. All rights reserved.</p>
