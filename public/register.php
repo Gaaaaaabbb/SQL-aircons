@@ -134,7 +134,8 @@ button:hover {
     <div class="login-box">
       <h1><span class="brand">SQL</span> Aircons</h1>
       <h2>Register</h2>
-      <form>
+      <form method="POST" action="">
+        <input type="text" name="name" placeholder="Full Name" required>       
         <input type="email" placeholder="Email" required />
         <input type="password" placeholder="Password" required />
         <button type="submit">Register</button>

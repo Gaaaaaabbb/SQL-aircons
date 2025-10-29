@@ -2,13 +2,13 @@
 include('../config/db.php');
 session_start();
 
-// ✅ Restrict access to admins only
+//  Restrict access to admins only
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
 }
 
-// ✅ Fetch all users
+//  Fetch all users
 $sql = "SELECT id, name, email, role, created_at FROM users ORDER BY created_at DESC";
 $result = $conn->query($sql);
 ?>

@@ -22,10 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: home.php");
             }
         } else {
-            echo "<p>Invalid password.</p>";
+            echo "<script> alert ('Invalid Password. Please try again.');</script>";
         }
     } else {
-        echo "<p> No user found with that email.</p>";
+        echo "<script>alert('No user found with that email.');</script>";
     }
 }
 ?>
@@ -135,9 +135,6 @@ button:hover {
   transition: color 0.2s;
 }
 
-.forgot-password:hover {
-  color: #1d4ed8;
-}
 
   </style>
 </head>
@@ -146,15 +143,14 @@ button:hover {
     <div class="login-box">
       <h1><span class="brand">SQL</span> Aircons</h1>
       <h2>Log in</h2>
-      <form>
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Password" required />
-        <button type="submit">Log in</button>
-        <a href="#" class="forgot-password">Forgot password?</a>
+      <form method="POST" action="">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name= "password" placeholder="Password" required />
+        <button type="submit">Log in</button> <br>
+
       </form>
       <p>Don't have an account? <a href="register.php">Register</a></p>
     </div>
   </div>
 </body>
 </html>
-

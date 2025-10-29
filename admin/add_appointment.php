@@ -2,17 +2,17 @@
 include('../config/db.php');
 session_start();
 
-// ✅ Restrict access to admins only
+//  Restrict access to admins only
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
 }
 
-// ✅ Fetch all users and services for dropdowns
+//  Fetch all users and services for dropdowns
 $users = $conn->query("SELECT id, name FROM users ORDER BY name ASC");
 $services = $conn->query("SELECT id, name FROM services ORDER BY name ASC");
 
-// ✅ Handle form submission
+//  Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_POST['user_id'];
     $service_id = $_POST['service_id'];

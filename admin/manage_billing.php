@@ -2,13 +2,13 @@
 include('../config/db.php');
 session_start();
 
-// ✅ Restrict access to admins only
+// Restrict access to admins only
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
 }
 
-// ✅ Handle status update
+//  Handle status update
 if (isset($_GET['mark_paid'])) {
     $billing_id = $_GET['mark_paid'];
     $conn->query("UPDATE billing SET status = 'paid' WHERE id = '$billing_id'");
@@ -16,7 +16,7 @@ if (isset($_GET['mark_paid'])) {
     exit;
 }
 
-// ✅ Fetch all billing records
+//  Fetch all billing records
 $sql = "
   SELECT 
     b.id AS billing_id,

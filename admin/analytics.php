@@ -3,13 +3,13 @@ include('../config/db.php');
 session_start();
 
 use Dompdf\Dompdf;
-// ✅ Restrict to admin users only
+//  Restrict to admin users only
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
 }
 
-// ✅ Get analytics data
+//  Get analytics data
 $total_users = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'customer'")->fetch_assoc()['total'];
 $total_appointments = $conn->query("SELECT COUNT(*) AS total FROM appointments")->fetch_assoc()['total'];
 $completed_appointments = $conn->query("SELECT COUNT(*) AS total FROM appointments WHERE status = 'completed'")->fetch_assoc()['total'];
@@ -22,7 +22,7 @@ $total_revenue = $conn->query("
     WHERE b.status = 'paid'
 ")->fetch_assoc()['total'] ?? 0;
 
-// ✅ PDF Export
+//  PDF Export
 if (isset($_GET['download']) && $_GET['download'] === 'pdf') {
     require('../vendor/autoload.php');
 

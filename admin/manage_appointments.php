@@ -2,13 +2,13 @@
 include('../config/db.php');
 session_start();
 
-// 🔒 Check admin access
+//  Check admin access
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
 }
 
-// ✅ Fetch all appointments with user & service info
+//  Fetch all appointments with user & service info
 $sql = "
     SELECT 
         a.id AS appointment_id,

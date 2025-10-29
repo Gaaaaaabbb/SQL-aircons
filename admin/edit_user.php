@@ -2,13 +2,13 @@
 include('../config/db.php');
 session_start();
 
-// ✅ Only admins can access this page
+// Only admins can access this page
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
 }
 
-// ✅ Check if `id` is in URL
+//Check if `id` is in URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: manage_users.php");
     exit;
@@ -16,7 +16,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $user_id = $_GET['id'];
 
-// ✅ Fetch the user from DB
+//  Fetch the user from DB
 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -27,7 +27,7 @@ if (!$user) {
     die("User not found.");
 }
 
-// ✅ Handle form submission
+//  Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name  = $_POST['name'];
     $email = $_POST['email'];

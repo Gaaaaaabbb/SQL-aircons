@@ -2,13 +2,13 @@
 include('../config/db.php');
 session_start();
 
-// ✅ Restrict access to admins only
+//  Restrict access to admins only
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
 }
 
-// ✅ Check if appointment ID is provided
+//  Check if appointment ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: manage_appointments.php");
     exit;
@@ -16,7 +16,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $appointment_id = $_GET['id'];
 
-// ✅ Fetch appointment details
+//  Fetch appointment details
 $stmt = $conn->prepare("
     SELECT a.*, u.name AS user_name, s.name AS service_name 
     FROM appointments a
@@ -33,11 +33,11 @@ if (!$appointment) {
     die("Appointment not found.");
 }
 
-// ✅ Fetch dropdown data
+//  Fetch dropdown data
 $users = $conn->query("SELECT id, name FROM users ORDER BY name ASC");
 $services = $conn->query("SELECT id, name FROM services ORDER BY name ASC");
 
-// ✅ Handle update
+//  Handle update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_POST['user_id'];
     $service_id = $_POST['service_id'];
