@@ -139,7 +139,6 @@ button:hover {
         <input type="email" placeholder="Email" required />
         <input type="password" placeholder="Password" required />
         <button type="submit">Register</button>
-        <a href="#" class="forgot-password">Forgot password?</a>
       </form>
     </div>
   </div>
