@@ -55,20 +55,96 @@ if (isset($_GET['download']) && $_GET['download'] === 'pdf') {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Analytics | Admin</title>
+<title>Admin | Analytics Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f5f6fa;
+/* ===========================
+   Admin Dashboard – SQL Aircons Unified Style
+   =========================== */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+  line-height: 1.6;
+}
+
+/* ---------- Header ---------- */
 header {
-  background: #007bff;
-  color: white;
-  padding: 20px;
-  text-align: center;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+header h1::before {
+  content: "SQL ";
+  color: #3b82f6;
+}
+
+/* ---------- Logout Button ---------- */
+.logout-btn {
+  background: #ef4444;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+/* ---------- Page Title ---------- */
+.page-title {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* ---------- Action Bar ---------- */
+.action-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px 40px;
+}
+
+.back-btn {
+  display: inline-block;
+  background: #3b82f6;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #2563eb;
+}
+
+/* ---------- Container ---------- */
 .container {
   width: 90%;
   max-width: 1000px;
@@ -78,33 +154,22 @@ header {
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-h2 {
-  color: #007bff;
-  margin-bottom: 20px;
-}
+
+/* ---------- Stats List ---------- */
 .stats {
   list-style: none;
   padding: 0;
 }
+
 .stats li {
-  background: #f0f2f5;
+  background: #f3f4f6;
   margin: 10px 0;
   padding: 12px;
   border-radius: 6px;
   font-size: 16px;
 }
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-button:hover {
-  background: #0056b3;
-}
+
+/* ---------- Chart Section ---------- */
 .chart-container {
   display: flex;
   flex-wrap: wrap;
@@ -112,6 +177,7 @@ button:hover {
   margin-top: 30px;
   gap: 40px;
 }
+
 canvas {
   background: #fff;
   border-radius: 10px;
@@ -120,19 +186,40 @@ canvas {
   height: 300px !important;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
+/* ---------- Buttons ---------- */
+button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #2563eb;
+}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Admin Analytics Dashboard</h1>
+  <h1>Aircons</h1>
+  <a href="../public/logout.php" class="logout-btn">Logout</a>
 </header>
 
-<div class="container">
-  <a href="dashboard.php" class="back">⬅ Back</a>
+<h1 class="page-title">Admin Analytics Dashboard</h1>
+
+<div class="action-bar">
+  <a href="dashboard.php" class="back-btn"> Back to Dashboard</a>
+</div>
 
 <div class="container">
-  <h2>📈 Summary Overview</h2>
+  <h2 style="color:#3b82f6; margin-bottom:20px;">📈 Summary Overview</h2>
   <ul class="stats">
     <li><strong>Total Appointments:</strong> <?= $total_appointments ?></li>
     <li><strong>Completed:</strong> <?= $completed_appointments ?></li>
@@ -148,7 +235,7 @@ canvas {
 
   <form method="GET" action="">
     <input type="hidden" name="download" value="pdf">
-    <button type="submit">⬇ Download PDF Report</button>
+    <button type="submit">Download PDF Report</button>
   </form>
 </div>
 
@@ -161,7 +248,7 @@ new Chart(ctx1, {
     labels: ['Completed', 'Pending', 'Cancelled'],
     datasets: [{
       data: [<?= $completed_appointments ?>, <?= $pending_appointments ?>, <?= $cancelled_appointments ?>],
-      backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+      backgroundColor: ['#16a34a', '#f59e0b', '#dc2626']
     }]
   },
   options: {
@@ -183,7 +270,7 @@ new Chart(ctx2, {
     datasets: [{
       label: '₱ Total Income',
       data: [<?= $total_revenue ?>],
-      backgroundColor: ['#007bff']
+      backgroundColor: ['#3b82f6']
     }]
   },
   options: {
@@ -204,3 +291,4 @@ new Chart(ctx2, {
 
 </body>
 </html>
+

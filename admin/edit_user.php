@@ -133,7 +133,7 @@ input[type="submit"]:hover {
 
     <label for="role">Role:</label>
     <select name="role" required>
-      <option value="user" <?= $user['role'] === 'user' ? 'selected' : '' ?>>User</option>
+      <option value="user" <?= $user['role'] === 'customer' ? 'selected' : '' ?>>Customer</option>
       <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
     </select>
 

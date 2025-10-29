@@ -2,7 +2,7 @@
 include('../config/db.php');
 session_start();
 
-// Restrict access to admins only
+// ✅ Restrict access to admins only
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../public/login.php");
     exit;
@@ -34,49 +34,138 @@ $sql = "
 ";
 $result = $conn->query($sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manage Billing | Admin</title>
+<title>Admin | Manage Billing</title>
 <style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f5f6fa;
+/* ===========================
+   Admin Dashboard – SQL Aircons Unified Style
+   =========================== */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+  line-height: 1.6;
+}
+
+/* ---------- Header ---------- */
 header {
-  background: #007bff;
-  color: white;
-  padding: 20px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+header h1::before {
+  content: "SQL ";
+  color: #3b82f6;
+}
+
+/* ---------- Logout Button ---------- */
+.logout-btn {
+  background: #ef4444;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+/* ---------- Page Title ---------- */
+.page-title {
   text-align: center;
+  margin-top: 40px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2937;
 }
+
+/* ---------- Action Bar ---------- */
+.action-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px 40px;
+}
+
+.back-btn {
+  display: inline-block;
+  background: #3b82f6;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #2563eb;
+}
+
+/* ---------- Container & Table ---------- */
 .container {
-  width: 90%;
-  margin: 40px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 30px;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
 th, td {
-  border: 1px solid #ccc;
-  padding: 10px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
   text-align: left;
 }
+
 th {
   background: #007bff;
   color: white;
 }
-tr:nth-child(even) {
-  background: #f9f9f9;
+
+tr:nth-child(even) { background: #f9f9f9; }
+
+/* ---------- Status Colors ---------- */
+.status-paid {
+  color: #16a34a;
+  font-weight: 600;
 }
+
+.status-pending {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+/* ---------- Action Links ---------- */
 .action-buttons a {
   text-decoration: none;
   background: #e3ebf7;
@@ -85,23 +174,27 @@ tr:nth-child(even) {
   border-radius: 6px;
   transition: 0.2s;
 }
+
 .action-buttons a:hover {
   background: #cddaf3;
   transform: scale(1.05);
 }
-.status-paid { color: green; font-weight: bold; }
-.status-pending { color: orange; font-weight: bold; }
 </style>
 </head>
 
 <body>
 <header>
-  <h1>Manage Billing</h1>
+  <h1>Aircons</h1>
+  <a href="../public/logout.php" class="logout-btn">Logout</a>
 </header>
 
-<div class="container">
-  <a href="dashboard.php" class="add-btn">⬅ Back to Dashboard</a>
+<h1 class="page-title">Manage Billing</h1>
 
+<div class="action-bar">
+  <a href="dashboard.php" class="back-btn">⬅ Back to Dashboard</a>
+</div>
+
+<div class="container">
   <table>
     <tr>
       <th>Customer</th>
@@ -121,9 +214,9 @@ tr:nth-child(even) {
         <td class="status-<?= strtolower($b['status']) ?>">
           <?= ucfirst($b['status']) ?>
         </td>
-        <td>
+        <td class="action-buttons">
           <?php if ($b['status'] !== 'paid'): ?>
-            <a href="?mark_paid=<?= $b['billing_id'] ?>" onclick="return confirm('Mark this bill as paid?');"> Mark as Paid</a>
+            <a href="?mark_paid=<?= $b['billing_id'] ?>" onclick="return confirm('Mark this bill as paid?');">Mark as Paid</a>
           <?php else: ?>
             ✅ Paid
           <?php endif; ?>
@@ -132,6 +225,5 @@ tr:nth-child(even) {
     <?php endwhile; ?>
   </table>
 </div>
-
 </body>
 </html>
