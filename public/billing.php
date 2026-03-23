@@ -18,11 +18,12 @@ $user = $user_result->fetch_assoc();
 $username = $user['name'] ?? 'User';
 $user_query->close();
 
-// Fetch billing records
+// Fetch billing records  
 $sql = "
-    SELECT b.*, s.name AS service_name
+    SELECT b.*, s.name AS service_name, a.appointment_date
     FROM billing b
     JOIN services s ON b.service_id = s.id
+    JOIN appointments a ON b.appointment_id = a.id
     WHERE b.user_id = ?
     ORDER BY b.created_at DESC
 ";
@@ -217,7 +218,7 @@ $stmt->close();
         <?php foreach ($billings as $bill): ?>
           <tr>
             <td><?= htmlspecialchars($bill['service_name']) ?></td>
-            <td>₱<?= number_format($bill['total_amount'], 2) ?></td>
+            <td>₱<?= number_format($bill['amount'], 2) ?></td>
             <td>
               <?php if (isset($bill['status']) && strtolower($bill['status']) === 'paid'): ?>
                 <span class="paid">Paid</span>
@@ -226,7 +227,7 @@ $stmt->close();
               <?php endif; ?>
             </td>
             <td><?= htmlspecialchars($bill['payment_method'] ?? 'Cash') ?></td>
-            <td><?= htmlspecialchars($bill['created_at']) ?></td>
+            <td><?= htmlspecialchars($bill['appointment_date']) ?></td>
           </tr>
         <?php endforeach; ?>
       <?php endif; ?>
