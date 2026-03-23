@@ -230,7 +230,7 @@ $result = $conn->query($sql);
   <script>
     window.addEventListener("pageshow", function(event) {
         if (event.persisted) {
-            window.location.href = "services.php"; // change to the current page name
+            window.location.href = "services.php"; 
         }
     });
 </script>

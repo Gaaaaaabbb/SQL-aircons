@@ -432,6 +432,7 @@ $username = $user['name'] ?? 'User';
     window.addEventListener("pageshow", function(event) {
         if (event.persisted) {
             window.location.href = "home.php"; 
+        }
     });
 </script>
 </body>
