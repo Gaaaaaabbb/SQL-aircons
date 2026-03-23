@@ -17,5 +17,6 @@ $stmt->bind_param("i", $id);
 $stmt->execute();
 
 header("Location: appointments.php");
+
 exit;
-?>
+
