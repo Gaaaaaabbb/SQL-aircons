@@ -58,6 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Edit Appointment | SQL Aircons</title>
+    <div class="container">
+  <a href="appointments.php" class="back">⬅ Back to Appointments</a>
+  
     <style>
         body { font-family: Arial; background: #f7f7f7; padding: 40px; }
         .form-container {
@@ -72,6 +75,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #007bff; color: white; cursor: pointer;
         }
         button:hover { background: #0056b3; }
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            font-size: 15px;
+            color: white;
+            background: #007bff;
+            border-radius: 999px;          
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back:hover {
+            background: #0056b3;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+        }
+
     </style>
 </head>
 <body>
@@ -95,6 +117,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Update</button>
     </form>
 </div>
-
+<script>
+    window.addEventListener("pageshow", function(event) {
+        if (event.persisted) {
+            window.location.href = "edit_appointment.php"; 
+        }
+    });
 </body>
 </html>

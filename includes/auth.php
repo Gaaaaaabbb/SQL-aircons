@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 ?>
-?>
+
 <script>
 
     window.addEventListener("pageshow", function(event) {
