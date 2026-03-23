@@ -227,5 +227,12 @@ $result = $conn->query($sql);
   <footer>
     <p>© <?= date('Y') ?> SQL Aircons. All Rights Reserved.</p>
   </footer>
+  <script>
+    window.addEventListener("pageshow", function(event) {
+        if (event.persisted) {
+            window.location.href = "billing.php"; // change to the current page name
+        }
+    });
+</script>
 </body>
 </html>

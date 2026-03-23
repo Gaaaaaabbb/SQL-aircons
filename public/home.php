@@ -428,6 +428,12 @@ $username = $user['name'] ?? 'User';
   <footer>
     <p>© <?php echo date("Y"); ?> SQL Aircons. All rights reserved.</p>
   </footer>
-
+<script>
+    window.addEventListener("pageshow", function(event) {
+        if (event.persisted) {
+            window.location.href = "billing.php"; // change to the current page name
+        }
+    });
+</script>
 </body>
 </html>
