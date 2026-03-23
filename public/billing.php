@@ -244,7 +244,7 @@ $stmt->close();
   <script>
     window.addEventListener("pageshow", function(event) {
         if (event.persisted) {
-            window.location.href = "billing.php"; // change to the current page name
+            window.location.href = "billing.php"; 
         }
     });
 </script>
