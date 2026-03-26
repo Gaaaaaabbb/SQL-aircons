@@ -46,30 +46,34 @@ $username = $user['name'] ?? 'User';
         .first-word-title { color: #2563eb; }
         .second-word-title { color: #111827; }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            background: white;
-            padding: 15px 0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            gap: 25px;
-        }
+    /* --- NAVIGATION --- */
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      animation: fadeInUp 1s ease;
+    }
 
-        nav a {
-            color: #111827;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 500;
-            padding: 10px 25px;
-            border-radius: 10px;
-            transition: 0.3s ease;
-        }
+    .nav-links a {
+      color: #111827;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 500;
+      padding: 10px 25px;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
 
-        nav a:hover {
-            background: #2563eb;
-            color: white;
-            transform: scale(1.05);
-        }
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #2563eb;
+      color: white;
+      transform: translateY(-3px);
+    }
 
         main {
             max-width: 1200px;
@@ -271,7 +275,35 @@ $username = $user['name'] ?? 'User';
             h1 { font-size: 28px; }
             nav { flex-wrap: wrap; gap: 12px; padding: 15px 10px; }
             .cards-container { grid-template-columns: 1fr; }
+    
         }
+            /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+}
     </style>
 </head>
 <body>
@@ -280,13 +312,14 @@ $username = $user['name'] ?? 'User';
         <h1><span class="first-word-title">SQL </span><span class="second-word-title">Aircons</span></h1>
     </header>
 
-    <nav>
-        <a href="home.php">Home</a>
-        <a href="services.php">Services</a>
-        <a href="appointments.php">My Appointments</a>
-        <a href="billing.php">Billing</a>
-        <a href="index.php">Logout</a>
-    </nav>
+  <div class="nav-links">
+    <a href="home.php" class="<?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : '' ?>">Home</a>
+    <a href="products.php" class="<?= basename($_SERVER['PHP_SELF']) == 'products.php' ? 'active' : '' ?>">Products</a>
+    <a href="services.php" class="<?= basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : '' ?>">Services</a>
+    <a href="appointments.php" class="<?= basename($_SERVER['PHP_SELF']) == 'appointments.php' ? 'active' : '' ?>">My Appointments</a>
+    <a href="billing.php" class="<?= basename($_SERVER['PHP_SELF']) == 'billing.php' ? 'active' : '' ?>">Billing</a>
+  </div>
+
 
     <main>
         <div class="welcome-section">

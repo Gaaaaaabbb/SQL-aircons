@@ -38,6 +38,12 @@ $orders_sql = "
     WHERE user_id = ? 
     ORDER BY order_date DESC
 ";
+$orders_sql = "
+    SELECT id, series, model, hp, total_amount, payment_method, status, order_date 
+    FROM orders 
+    WHERE user_id = ? 
+    ORDER BY order_date DESC
+";
 $orders_stmt = $conn->prepare($orders_sql);
 $orders_stmt->bind_param("i", $user_id);
 $orders_stmt->execute();
@@ -211,11 +217,11 @@ $stmt->close();
   </header>
 
   <div class="nav-links">
-    <a href="home.php">Home</a>
-    <a href="services.php">Services</a>
-    <a href="appointments.php">My Appointments</a>
-    <a href="billing.php" class="active">Billing</a>
-  </div>
+    <a href="home.php" class="<?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : '' ?>">Home</a>
+    <a href="products.php" class="<?= basename($_SERVER['PHP_SELF']) == 'products.php' ? 'active' : '' ?>">Products</a>
+    <a href="services.php" class="<?= basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : '' ?>">Services</a>
+    <a href="appointments.php" class="<?= basename($_SERVER['PHP_SELF']) == 'appointments.php' ? 'active' : '' ?>">My Appointments</a>
+    <a href="billing.php" class="<?= basename($_SERVER['PHP_SELF']) == 'billing.php' ? 'active' : '' ?>">Billing</a>
 
   <main>
     <h2>Your Billing Summary</h2>
@@ -251,34 +257,36 @@ $stmt->close();
     </table>
     <h2 style="margin-top: 60px;">Your Product Orders</h2>
 
-    <table>
-        <tr>
-            <th>Product</th>
-            <th>Model</th>
-            <th>Capacity</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>Date</th>
-        </tr>
-        <?php if (empty($orders)): ?>
-            <tr><td colspan="6" style="padding: 25px;">No product orders yet.</td></tr>
-        <?php else: ?>
-            <?php foreach ($orders as $order): ?>
-                <tr>
-                    <td><?= htmlspecialchars($order['series']) ?></td>
-                    <td><?= htmlspecialchars($order['model']) ?></td>
-                    <td><?= htmlspecialchars($order['hp']) ?></td>
-                    <td>₱<?= number_format($order['total_amount'], 2) ?></td>
-                    <td>
-                        <span class="<?= strtolower($order['status']) === 'confirmed' ? 'paid' : 'pending' ?>">
-                            <?= ucfirst($order['status']) ?>
-                        </span>
-                    </td>
-                    <td><?= date('Y-m-d', strtotime($order['order_date'])) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </table>
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Model</th>
+        <th>Capacity</th>
+        <th>Amount</th>
+        <th>Payment Method</th>
+        <th>Status</th>
+        <th>Date</th>
+    </tr>
+    <?php if (empty($orders)): ?>
+        <tr><td colspan="7" style="padding: 25px;">No product orders yet.</td></tr>
+    <?php else: ?>
+        <?php foreach ($orders as $order): ?>
+            <tr>
+                <td><?= htmlspecialchars($order['series']) ?></td>
+                <td><?= htmlspecialchars($order['model']) ?></td>
+                <td><?= htmlspecialchars($order['hp']) ?></td>
+                <td>₱<?= number_format($order['total_amount'], 2) ?></td>
+                <td><?= ucfirst($order['payment_method'] ?? 'N/A') ?></td>
+                <td>
+                    <span class="<?= strtolower($order['status']) === 'confirmed' ? 'paid' : 'pending' ?>">
+                        <?= ucfirst($order['status']) ?>
+                    </span>
+                </td>
+                <td><?= date('Y-m-d', strtotime($order['order_date'])) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</table>
   </main>
 
   <footer>
