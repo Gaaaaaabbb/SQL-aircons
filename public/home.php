@@ -352,16 +352,17 @@ $username = $user['name'] ?? 'User';
   </header>
 
   <nav>
+    <a href="products.php">Products</a>
     <a href="services.php">Services</a>
     <a href="appointments.php">My Appointments</a>
     <a href="billing.php">Billing</a>
     <a href="index.php">Logout</a>
   </nav>
-
+  
   <main>
     <div class="welcome-section">
       <p class="welcome-text">Welcome back, <?php echo htmlspecialchars($username); ?></p>
-      <p class="slogan">Manage your air conditioning services with ease.</p>
+      <p class="slogan">Manage your air conditioning services and shop with ease.</p>
     </div>
 
     <!-- Quick Action Cards -->
@@ -370,6 +371,12 @@ $username = $user['name'] ?? 'User';
         <div class="card-icon">🔧</div>
         <div class="card-title">Browse Services</div>
         <p class="card-description">Explore our professional AC maintenance and repair services</p>
+      </a>
+
+      <a href="products.php" class="card">
+        <div class="card-icon">🛒</div>
+        <div class="card-title">Browse Products</div>
+        <p class="card-description">Discover quality you can trust browse our curated selection of products designed to meet your needs, elevate your experience, and deliver value every time.</p>
       </a>
 
       <a href="appointments.php" class="card">
@@ -384,12 +391,9 @@ $username = $user['name'] ?? 'User';
         <p class="card-description">Check invoices and payment history for your services</p>
       </a>
 
-      <a href="services.php" class="card">
-        <div class="card-icon">📞</div>
-        <div class="card-title">Request Service</div>
-        <p class="card-description">Schedule a new appointment for AC maintenance or repair</p>
-      </a>
     </div>
+
+
 
     <!-- Info Section -->
     <div class="info-section">

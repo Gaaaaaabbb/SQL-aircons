@@ -30,7 +30,20 @@ $sql = "
     JOIN appointments a ON b.appointment_id = a.id
     WHERE b.user_id = ?
     ORDER BY b.created_at DESC
+    
 ";
+$orders_sql = "
+    SELECT id, series, model, hp, total_amount, status, order_date 
+    FROM orders 
+    WHERE user_id = ? 
+    ORDER BY order_date DESC
+";
+$orders_stmt = $conn->prepare($orders_sql);
+$orders_stmt->bind_param("i", $user_id);
+$orders_stmt->execute();
+$orders_result = $orders_stmt->get_result();
+$orders = $orders_result->fetch_all(MYSQLI_ASSOC);
+$orders_stmt->close();
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -235,6 +248,36 @@ $stmt->close();
           </tr>
         <?php endforeach; ?>
       <?php endif; ?>
+    </table>
+    <h2 style="margin-top: 60px;">Your Product Orders</h2>
+
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Model</th>
+            <th>Capacity</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+        <?php if (empty($orders)): ?>
+            <tr><td colspan="6" style="padding: 25px;">No product orders yet.</td></tr>
+        <?php else: ?>
+            <?php foreach ($orders as $order): ?>
+                <tr>
+                    <td><?= htmlspecialchars($order['series']) ?></td>
+                    <td><?= htmlspecialchars($order['model']) ?></td>
+                    <td><?= htmlspecialchars($order['hp']) ?></td>
+                    <td>₱<?= number_format($order['total_amount'], 2) ?></td>
+                    <td>
+                        <span class="<?= strtolower($order['status']) === 'confirmed' ? 'paid' : 'pending' ?>">
+                            <?= ucfirst($order['status']) ?>
+                        </span>
+                    </td>
+                    <td><?= date('Y-m-d', strtotime($order['order_date'])) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </table>
   </main>
 
